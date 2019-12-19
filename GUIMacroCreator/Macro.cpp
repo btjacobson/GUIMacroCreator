@@ -2,7 +2,7 @@
 
 Macro::Macro()
 {
-
+	m_TotalSteps = 0;
 }
 
 Macro::~Macro()
@@ -13,6 +13,7 @@ Macro::~Macro()
 void Macro::AddPoint(POINT point, double time)
 {
 	m_Steps.push_back(Step(point, time));
+	m_TotalSteps++;
 }
 
 void Macro::Execute()
@@ -28,6 +29,7 @@ void Macro::Execute()
 void Macro::Clear()
 {
 	m_Steps.clear();
+	m_TotalSteps = 0;
 }
 
 void Macro::MouseLeftClick()
@@ -52,4 +54,14 @@ void Macro::MouseRightClick()
 	input.type = INPUT_MOUSE;
 	input.mi.dwFlags = MOUSEEVENTF_RIGHTUP;
 	SendInput(1, &input, sizeof(INPUT));
+}
+
+std::vector<Step> Macro::GetSteps()
+{
+	return m_Steps;
+}
+
+short Macro::TotalSteps()
+{
+	return m_TotalSteps;
 }

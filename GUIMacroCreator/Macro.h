@@ -98,8 +98,12 @@ public:
 	void MouseLeftClick();
 	void MouseRightClick();
 
+	std::vector<Step> GetSteps();
+	short TotalSteps();
+
 	Timer timer;
 
 private:
 	std::vector<Step> m_Steps;
+	short m_TotalSteps;
 };

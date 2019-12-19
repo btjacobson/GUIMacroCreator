@@ -1,5 +1,7 @@
 #include "MacroWindow.h"
 
+#include <fstream>
+
 MacroWindow::MacroWindow(QWidget* parent) : QWidget(parent)
 {
 	short buttonWidth = 175;
@@ -35,7 +37,7 @@ MacroWindow::MacroWindow(QWidget* parent) : QWidget(parent)
 	statusLabel = new QLabel(this);
 	statusLabel->setFrameStyle(QFrame::Panel | QFrame::Sunken);
 	statusLabel->setText(" ");
-	statusLabel->setAlignment(Qt::AlignBottom | Qt::AlignLeft);
+	statusLabel->setAlignment(Qt::AlignBottom | Qt::AlignCenter);
 
 	// Attach each button to a function
 	connect(playButton, &QPushButton::clicked, this, &MacroWindow::Play);
@@ -70,13 +72,22 @@ void MacroWindow::Play()
 {
 	statusLabel->setText("Play");
 
-	m_Macro.Execute();
+	bool continueExecuting = true;
+
+	while (continueExecuting)
+	{
+		if (GetAsyncKeyState(VK_RBUTTON))
+		{
+			continueExecuting = false;
+		}
+		m_Macro.Execute();
+	}
+
+	statusLabel->setText("Finished Playback");
 }
 
 void MacroWindow::Record()
 {
-	statusLabel->setText("Press RMB to stop recording");
-
 	bool hasFinished = false;
 	double elapsedTime = 0;
 
@@ -109,17 +120,48 @@ void MacroWindow::Record()
 	}
 	timeThread.detach();
 
-	statusLabel->setText("Successfully recorded points");
+	statusLabel->setText(QString("Successfully recorded %1 points").arg(m_Macro.TotalSteps()));
 }
 
 void MacroWindow::Save()
 {
-	statusLabel->setText("Save");
+	statusLabel->setText("Saving...");
+
+	std::ofstream outFile;
+	outFile.open("macro.txt");
+
+	std::vector<Step> tempSteps = m_Macro.GetSteps();
+
+	for (auto& step : tempSteps)
+	{
+		outFile << step.point.x << " " << step.point.y << " " << step.timeDelay << "\n";
+	}
+
+	outFile.close();
+
+	statusLabel->setText("Saved Succesfully");
 }
 
 void MacroWindow::Load()
 {
-	statusLabel->setText("Load");
+	statusLabel->setText("Loading...");
+
+	std::ifstream inFile;
+	inFile.open("macro.txt");
+
+	long x;
+	long y;
+	double t;
+
+	while (!inFile.eof())
+	{
+		inFile >> x >> y >> t;
+		m_Macro.AddPoint({ x, y }, t);
+	}
+
+	inFile.close();
+
+	statusLabel->setText("Loaded Successfully");
 }
 
 void MacroWindow::Clear()
