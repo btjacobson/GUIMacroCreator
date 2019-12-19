@@ -2,7 +2,7 @@
 
 Macro::Macro()
 {
-	m_TotalSteps = 0;
+
 }
 
 Macro::~Macro()
@@ -13,7 +13,6 @@ Macro::~Macro()
 void Macro::AddPoint(POINT point, double time)
 {
 	m_Steps.push_back(Step(point, time));
-	m_TotalSteps++;
 }
 
 void Macro::Execute()
@@ -59,9 +58,4 @@ void Macro::MouseRightClick()
 std::vector<Step> Macro::GetSteps()
 {
 	return m_Steps;
-}
-
-short Macro::TotalSteps()
-{
-	return m_TotalSteps;
 }

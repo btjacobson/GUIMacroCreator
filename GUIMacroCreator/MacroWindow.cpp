@@ -120,7 +120,7 @@ void MacroWindow::Record()
 	}
 	timeThread.detach();
 
-	statusLabel->setText(QString("Successfully recorded %1 points").arg(m_Macro.TotalSteps()));
+	statusLabel->setText("Successfully recorded");
 }
 
 void MacroWindow::Save()
