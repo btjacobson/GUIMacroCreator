@@ -5,6 +5,8 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 
+#include "Macro.h"
+
 class MacroWindow : public QWidget
 {
 public:
@@ -12,7 +14,6 @@ public:
 	~MacroWindow();
 
 	void Play();
-	void Stop();
 	void Record();
 	void Save();
 	void Load();
@@ -22,11 +23,12 @@ private:
 	QVBoxLayout* vBox;
 
 	QPushButton* playButton;
-	QPushButton* stopButton;
 	QPushButton* recordButton;
 	QPushButton* saveButton;
 	QPushButton* loadButton;
 	QPushButton* clearButton;
 
 	QLabel* statusLabel;
+
+	Macro m_Macro;
 };
