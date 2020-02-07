@@ -28,7 +28,6 @@ void Macro::Execute()
 void Macro::Clear()
 {
 	m_Steps.clear();
-	m_TotalSteps = 0;
 }
 
 void Macro::MouseLeftClick()
