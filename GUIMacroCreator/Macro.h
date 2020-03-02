@@ -93,7 +93,7 @@ public:
 	~Macro();
 
 	void AddPoint(POINT point, double time);
-	void Execute();
+	void Execute(bool& continueExecuting);
 	void Clear();
 	void MouseLeftClick();
 	void MouseRightClick();

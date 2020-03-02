@@ -76,11 +76,7 @@ void MacroWindow::Play()
 
 	while (continueExecuting)
 	{
-		if (GetAsyncKeyState(VK_RBUTTON))
-		{
-			continueExecuting = false;
-		}
-		m_Macro.Execute();
+		m_Macro.Execute(continueExecuting);
 	}
 
 	statusLabel->setText("Finished Playback");

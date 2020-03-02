@@ -15,10 +15,15 @@ void Macro::AddPoint(POINT point, double time)
 	m_Steps.push_back(Step(point, time));
 }
 
-void Macro::Execute()
+void Macro::Execute(bool& continueExecuting)
 {
 	for (auto& step : m_Steps)
 	{
+		if (GetAsyncKeyState(VK_RBUTTON))
+		{
+			continueExecuting = false;
+			break;
+		}
 		Sleep(step.timeDelay);
 		SetCursorPos(step.point.x, step.point.y);
 		MouseLeftClick();
