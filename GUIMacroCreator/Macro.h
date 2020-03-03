@@ -9,6 +9,7 @@
 #include <thread>
 #include <future>
 #include <ctime>
+#include <string>
 
 struct Step
 {
