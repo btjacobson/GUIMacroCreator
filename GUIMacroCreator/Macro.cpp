@@ -24,9 +24,12 @@ void Macro::Execute(bool& continueExecuting)
 			continueExecuting = false;
 			break;
 		}
-		Sleep(step.timeDelay);
-		SetCursorPos(step.point.x, step.point.y);
-		MouseLeftClick();
+		else
+		{
+			Sleep(step.timeDelay);
+			SetCursorPos(step.point.x, step.point.y);
+			MouseLeftClick();
+		}
 	}
 }
 
